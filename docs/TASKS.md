@@ -13,6 +13,6 @@ QA-01 : lancer l'atelier, lire les contrats, tester mobile 390px/desktop 1280px,
 
 ## Sections supplémentaires prêtes à spécifier
 - SPEC-DOCS-01 → Gemini : docs/missions/SPEC-DOCS-01.md. Livrable limité à docs/proposals/documents.md. Prêt, non lancé.
-- SPEC-JOBS-01 → Grok : docs/missions/SPEC-JOBS-01.md. Livrable limité à docs/proposals/jobs.md. Prêt, non lancé.
+- SPEC-JOBS-01 → Grok : docs/missions/SPEC-JOBS-01.md. Livrable reçu via le fondateur, revu et déposé dans [PR #1](https://github.com/Masterofhypnose/intermittenz/pull/1). Proposition en revue, pas encore fusionnée ; ne pas refaire la mission.
 
 La couverture des autres sections et leurs dépendances se trouve dans [ROADMAP.md](ROADMAP.md). Les spécifications évitent que chaque contributeur crée sa propre auth, base ou architecture.
