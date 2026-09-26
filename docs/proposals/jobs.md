@@ -54,8 +54,8 @@ export type JobSearchQuery = {
   category?: string;
   city?: string;
   kind?: JobKind;
-  startsOnOrAfter?: string;
-  endsOnOrBefore?: string;
+  startsOnOrAfter?: string; // YYYY-MM-DD inclusif
+  endsOnOrBefore?: string; // YYYY-MM-DD inclusif
   remunerationStatus?: Remuneration['status'];
   pay?: { minimumCents: number; unit: PayUnit;
     basis: 'gross' | 'net' | 'invoice_excl_tax' | 'invoice_incl_tax' };
@@ -81,17 +81,53 @@ export type JobsModuleProps = {
 
 ### Règles de données
 - Montants en centimes entiers sûrs, positifs ou nuls. Un montant inconnu n'est pas zéro. Ne pas convertir automatiquement salaire brut/net ou facture/salaire.
-- Filtre de montant : comparer uniquement les mêmes unité et base. Un cachet ne se compare pas à un salaire mensuel. Ne pas convertir les bases inconnues.
-- `not_applicable` est réservé aux offres explicitement bénévoles. Un casting peut conduire à un emploi salarié : le type de contrat et la rémunération doivent rester distincts du format de recrutement. Dans un lot ultérieur, envisager deux axes de catégorisation si les offres le nécessitent.
+- Si `pay` est présent, inclure seulement une rémunération `known`, de même `unit` et même `basis`, dont `amountCents >= minimumCents`. Exclure `unknown`, `not_applicable`, `unspecified` et les autres bases/unités ; aucune conversion. `minimumCents` est un entier sûr positif ou nul. Tous les filtres se cumulent par ET, y compris `remunerationStatus`.
+- `not_applicable` est réservé aux offres explicitement bénévoles ; réciproquement une offre `volunteer` utilise `not_applicable`. Rejeter les combinaisons incohérentes à la validation des données. Un casting peut conduire à un emploi salarié : le type de contrat et la rémunération doivent rester distincts du format de recrutement. Dans un lot ultérieur, envisager deux axes de catégorisation si les offres le nécessitent.
 - `canonicalUrl` obligatoire pour les sources externes, pas de faux lien pour les fixtures ou annonces internes. URLs externes HTTPS sans identifiants dans l'URL.
-- Une source externe ne crée pas automatiquement un compte recruteur Intermittent+. Son publisher est une référence d'affichage. Le contact interne n'est proposé que pour une identité interne vérifiée.
+- Une source externe ne crée pas automatiquement un compte recruteur Intermittent+. Son publisher est une référence d'affichage. Le contact interne n'est proposé que pour une identité interne vérifiée ; `application.publisherId` doit alors être égal à `publisher.id`. Cette égalité ne remplace pas l'autorisation serveur.
 - `expiresAt` correspond à la candidature, pas à la date de fin de travail. Convertir une date sans heure uniquement avec une politique de fuseau documentée ; ne pas inventer une précision venant de la source.
-- Dates de travail manquantes : ne pas les supposer compatibles avec un filtre daté ; annoncer que les offres à dates inconnues sont exclues de ce filtre. Les fixtures comportent cas connus, flexibles et inconnus.
+- Dates de travail et filtres : dates calendaires valides au format strict `YYYY-MM-DD`, comparées sans conversion de fuseau. Les bornes sont inclusives. Rejeter une période complète inversée, un filtre inversé ou une date invalide.
+
+### Filtres de dates : décision explicite
+Ces filtres portent sur les bornes de travail, pas sur un chevauchement de disponibilités.
+
+| Filtres présents | Condition nécessaire |
+|---|---|
+| Aucun | Dates absentes ou partielles acceptées |
+| `startsOnOrAfter` seul | `dates.start` existe et est supérieur ou égal au filtre ; `end` peut manquer |
+| `endsOnOrBefore` seul | `dates.end` existe et est inférieur ou égal au filtre ; `start` peut manquer |
+| Les deux | Les deux bornes existent et satisfont chacune leur filtre |
+
+`flexible: true` est informatif : il ne dispense d'aucune comparaison et ne permet pas d'inventer une borne manquante. Une offre sans la borne requise est exclue du résultat filtré. L'UI précise que les dates non renseignées ne sont pas incluses. Exemple : début au 2026-11-01, flexible, filtre début à partir du 2026-12-01 → exclue.
 
 ## 3. Service et comportements
-Recherche : seulement offres actives par défaut, curseur stable lié aux filtres. Une nouvelle recherche réinitialise le curseur ; ignorer les réponses obsolètes. Aucun résultat = items vide, pas erreur.
+### Statut effectif : calcul unique côté service
+À chaque appel, le service capture une seule valeur `now` (horloge injectable en tests). Priorité :
+1. Statut enregistré `withdrawn` → retirée, quelle que soit la date.
+2. Statut enregistré `expired` → expirée, même sans échéance ou avec une échéance future ; une réouverture demande une mise à jour explicite.
+3. Sinon, `expiresAt <= now` → expirée, y compris à l'instant exact d'échéance.
+4. Sinon → active.
+
+`expiresAt` et `createdAt` sont des timestamps ISO valides avec fuseau, comparés comme instants UTC à la milliseconde ; rejeter les valeurs invalides à l'entrée. `expiresAt` absent n'expire pas automatiquement l'offre. Le service applique cette même règle à `search`, `getById` et à l'ajout d'un favori. Il renvoie un `offer.status` normalisé, cohérent avec `JobLookup.status`. Le client n'invente pas une autre priorité.
+
+### Recherche et pagination
+Recherche : uniquement offres effectivement actives. Une nouvelle recherche réinitialise le curseur ; ignorer les réponses obsolètes. Aucun résultat = items vide, pas erreur.
+- Ordre total : instant `createdAt` décroissant, puis `id` décroissant par comparaison lexicographique des unités UTF-16, sans tri dépendant de la langue. IDs uniques ; `createdAt` et `id` immuables.
+- Curseur opaque fondé sur la dernière paire `(createdAt, id)` retournée et les filtres normalisés ; jamais un offset. La page suivante contient uniquement des clés strictement inférieures à cette paire.
+- Normalisation des filtres pour le curseur : retirer les espaces aux extrémités des champs texte, traiter une chaîne vide comme absente, sérialiser les champs dans un ordre fixe en excluant `cursor`. Les autres valeurs sont conservées après validation. Un curseur malformé ou lié à des filtres différents est rejeté, sans retour silencieux à la première page.
+- Une insertion placée avant le curseur apparaît après actualisation du catalogue ; une insertion après le curseur peut apparaître dans les pages suivantes. Les suppressions, expirations ou modifications de contenu ne garantissent pas un instantané figé. Aucun doublon d'ID dû au décalage d'un index n'est permis.
 Détail : une offre expirée reste consultable si conservée, avec candidature désactivée. Une offre retirée n'expose plus son ancien contenu. Une erreur réseau est un rejet distinct des états métier de JobLookup et affiche Réessayer.
-Favoris : chargement initial explicite, mutation protégée contre les doubles clics, rollback et erreur visible. Un favori devenu introuvable peut être supprimé. Le contrat ne permet pas de promettre une liste complète de fiches favorites sans lectures getById correspondantes.
+### Favoris
+Chargement initial explicite, mutation protégée contre les doubles clics, rollback et erreur visible.
+
+| Opération | Comportement |
+|---|---|
+| `setFavorite(id, true)`, offre active | Ajout ; succès sans doublon si déjà favorite |
+| `setFavorite(id, true)`, offre expirée, retirée ou introuvable | Rejet, aucun ajout, même si l'ID était déjà favori |
+| `setFavorite(id, false)`, tout ID | Retrait idempotent : succès sans effet si absent ou déjà retiré, indépendamment de l'état de l'offre |
+
+Ces succès restent soumis aux éventuels contrôles d'autorisation et erreurs techniques du service connecté.
+Les favoris acquis avant expiration restent listés par `listFavoriteIds` ; aucun nettoyage automatique à la lecture. Pour `withdrawn` ou `not_found`, l'UI montre « Offre indisponible » sans ancien contenu, avec action explicite de retrait. Une offre expirée reste identifiée comme telle, sans candidature. Le contrat ne permet pas de promettre une liste complète de fiches favorites sans lectures `getById` correspondantes.
 Dédoublonnage : privilégier (source.name, externalId), sinon (source.name, canonicalUrl normalisée). Ne pas supprimer des paramètres de query qui identifient l'annonce. La mise à jour d'une offre conserve son identité et l'état favori.
 Conservation : durée selon source/licence, à définir avant ingestion ; suppression des copies de contenu après retrait selon conditions applicables. Métadonnées minimales seulement si leur conservation est justifiée.
 `viewer` et `organizationId` ne sont jamais une preuve d'autorisation ; les services connectés appliqueront les contrôles côté serveur.
@@ -115,9 +151,12 @@ Aucune ingestion « manuelle » de contenus externes n'est exemptée de la valid
 
 ## 6. Tests attendus du futur module
 - Filtres texte/métier/lieu/type, dates absentes, rémunération inconnue et bases/unités incompatibles.
-- Pagination stable, remise à zéro après filtre, résultats hors ordre.
+- Dates : chacune des quatre lignes du tableau, bornes égales, partielles/absentes, flexible vrai/faux, dates invalides et plages inversées.
+- Pagination : égalité de createdAt départagée par ID, insertion avant/après curseur, retrait entre pages, curseur invalide/incompatible, remise à zéro après filtre, réponses hors ordre.
+- Horloge fixe : juste avant/à/après expiresAt, active avec échéance passée, expired avec échéance future, priorité withdrawn, absence d'échéance ; cohérence search/getById/favoris.
 - Détail actif/expiré/retiré/introuvable et vraie erreur réseau.
-- Favori : initialisation, clic concurrent, échec visible, retry et retrait d'un favori supprimé.
+- Favori : initialisation, clic concurrent, échec visible, retry ; toutes les lignes du tableau, retrait répété d'un ID inconnu, conservation d'un favori expiré et affichage sans contenu d'une offre retirée.
+- Validation : cohérence bénévolat/rémunération et identité du contact interne ; exclusion explicite de basis unspecified sous filtre pay.
 - Mise à jour d'une même source sans doublon et provenance préservée.
 - HTML malveillant affiché comme texte, URL dangereuse refusée.
 - Aucun envoi réel en mode démo ; aucune action de candidature sur offre expirée.
@@ -128,3 +167,6 @@ Tester les vrais imports et composants ; pas de copie de logique dans les tests.
 Ce fichier est une spécification revue, pas des contrats approuvés ni du code exécutable déployé. Les signatures tronquées de la réponse Grok ont été réparées ; les filtres dates/rémunération, bases salariales, provenance conditionnelle et états métier ont été ajoutés.
 Prochain lot proposé : JOBS-01, validation du contrat par l'intégrateur puis adaptateur fictif et UI isolés. Aucun scraping, auth/DB, moteur des droits, nouveau package ou vrai envoi dans ce lot.
 Grok n'a pas exécuté Node, créé de branche ou ouvert de PR. L'intégrateur porte cette proposition dans une branche publique avec PR. Aucune affirmation que Grok avait un accès en écriture.
+
+### Revue Grok prise en compte — 26 septembre 2026
+Les quatre ambiguïtés signalées (statut/échéance, dates flexibles ou partielles, favoris invalides, tri/curseur) sont tranchées ci-dessus. Les cinq précisions complémentaires sont intégrées. Ces décisions spécifient le futur module ; elles ne constituent pas une implémentation ni une validation de sources externes.
