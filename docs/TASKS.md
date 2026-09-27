@@ -4,7 +4,7 @@
 |---|---|---|---|
 | CHAT-01 | Claude, lancé par le fondateur | Brief transmis, code pas encore reçu | components/chat, lib/chat, tests/chat*.test.mjs |
 | MARKET-01 | DeepSeek via le fondateur puis intégrateur | Livré, corrigé et testé | Marketplace présente dans cet atelier |
-| MARKET-02 | DeepSeek | Prêt, non lancé | Revue/corrections ciblées de la marketplace existante |
+| MARKET-02 | DeepSeek puis intégrateur | Livré, corrigé et testé — [PR #2](https://github.com/Masterofhypnose/intermittenz/pull/2) ouverte, ne pas refaire | Focus au retour catalogue, pagination conservée et favoris isolés par service |
 | QA-01 | Gemini ou Grok | Disponible, non lancé | Rapport docs/reviews/QA-01.md, pas de modifications applicatives |
 
 Une mission n'est pas attribuée ou lancée automatiquement par ce tableau. Vérifier les PR ouvertes pour éviter les doublons ; ne pas prendre deux missions qui modifient les mêmes fichiers.
