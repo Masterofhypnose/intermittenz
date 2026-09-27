@@ -57,3 +57,55 @@ test('marketplace real React flow: create validation, ambiguous retry, favorites
   assert.match(document.querySelector('[aria-label="Résultats"]').textContent,/Newest/);assert.doesNotMatch(document.querySelector('[aria-label="Résultats"]').textContent,/Obsolete/);
  }finally{await React.act(async()=>root.unmount());dom.window.close();}
 });
+
+test('MARKET-02: return focus survives remount, preserves loaded pages, and creation return',async()=>{
+ const dom=new JSDOM('<div id="root"></div>',{url:'https://test.example'});
+ Object.assign(globalThis,{window:dom.window,document:dom.window.document,FormData:dom.window.FormData,IS_REACT_ACT_ENVIRONMENT:true});
+ const React=require('react');const {createRoot}=require('react-dom/client');const {MarketplaceModule}=require('../components/marketplace');
+ const root=createRoot(document.getElementById('root'));
+ const button=text=>[...document.querySelectorAll('button')].find(el=>el.textContent===text);
+ const click=async el=>{assert.ok(el);await React.act(async()=>el.click());};
+ try{
+  await React.act(async()=>root.render(React.createElement(MarketplaceModule,{context:{mode:'demo',viewer:{id:'me',displayName:'Demo'}},service:createDemoMarketplaceService(),onContactSeller:()=>{}})));
+  assert.notEqual(document.activeElement,document.querySelector('h1'),'initial render must not steal focus');
+  await click(button('Charger plus'));
+  const original=[...document.querySelectorAll('button[aria-label^="Voir "]')].at(-1);const label=original.getAttribute('aria-label');original.focus();
+  await click(original);assert.equal(document.activeElement,document.querySelector('h1'));assert.equal(original.isConnected,false);
+  await click(button('← Retour au catalogue'));
+  assert.equal(document.querySelectorAll('article').length,5);
+  assert.equal(document.activeElement.getAttribute('aria-label'),label);
+  await click(button('Créer une annonce'));assert.equal(document.activeElement,document.querySelector('h1'));
+  await click(button('← Retour au catalogue'));assert.equal(document.activeElement,button('Créer une annonce'));
+ }finally{await React.act(async()=>root.unmount());dom.window.close();}
+});
+
+test('MARKET-02: obsolete success/rejection cannot unlock current favorite or alter new service state',async()=>{
+ for(const outcome of ['resolve','reject']){
+  const dom=new JSDOM('<div id="root"></div>',{url:'https://test.example'});
+  Object.assign(globalThis,{window:dom.window,document:dom.window.document,FormData:dom.window.FormData,IS_REACT_ACT_ENVIRONMENT:true});
+  const React=require('react');const {createRoot}=require('react-dom/client');const {MarketplaceModule}=require('../components/marketplace');
+  const root=createRoot(document.getElementById('root'));
+  const a=createDemoMarketplaceService();const b=createDemoMarketplaceService();const page=await b.search({text:''});const first=page.items[0],second=page.items[1];
+  await b.setFavorite(second.id,true);
+  let finishA,finishB;let callsB=0;
+  const serviceA={...a,setFavorite:()=>new Promise((resolve,reject)=>{finishA=()=>outcome==='resolve'?resolve():reject(new Error('obsolete failure'));})};
+  const serviceB={...b,setFavorite:()=>{callsB++;return new Promise(resolve=>{finishB=resolve;});}};
+  const props={context:{mode:'demo',viewer:{id:'me',displayName:'Demo'}},onContactSeller:()=>{}};
+  const fav=title=>[...document.querySelectorAll('button[aria-pressed]')].find(el=>el.getAttribute('aria-label').includes(title));
+  const click=async el=>React.act(async()=>el.click());
+  try{
+   await React.act(async()=>root.render(React.createElement(MarketplaceModule,{...props,service:serviceA})));
+   await click(fav(first.title));assert.equal(fav(first.title).disabled,true);
+   await React.act(async()=>root.render(React.createElement(MarketplaceModule,{...props,service:serviceB})));
+   assert.equal(fav(first.title).disabled,false,'new service must not inherit old locks');
+   assert.equal(fav(first.title).getAttribute('aria-pressed'),'false');assert.equal(fav(second.title).getAttribute('aria-pressed'),'true');
+   await click(fav(first.title));assert.equal(callsB,1);
+   await React.act(async()=>finishA());
+   assert.equal(fav(first.title).disabled,true,'old finally must not release the new service lock');
+   assert.equal(fav(first.title).getAttribute('aria-pressed'),'true');assert.equal(fav(second.title).getAttribute('aria-pressed'),'true');
+   assert.equal(document.querySelector('[role="alert"]'),null);
+   await click(fav(first.title));assert.equal(callsB,1);
+   await React.act(async()=>finishB());assert.equal(fav(first.title).disabled,false);
+  }finally{await React.act(async()=>root.unmount());dom.window.close();}
+ }
+});
