@@ -9,7 +9,7 @@
 | SPEC-ACTIVITY-01 | Claude | Prêt à lancer — [brief complet](missions/SPEC-ACTIVITY-01.md) | Activité/calendrier : spécification et contrat proposés |
 | SPEC-DOCS-01 | Gemini | Prêt à lancer — [brief complet](missions/SPEC-DOCS-01.md) | Coffre local : spécification et contrat proposés |
 | QA-DISPLAY-01 | DeepSeek | Prêt à lancer — [brief complet](missions/QA-DISPLAY-01.md) | Revue visuelle ou statique explicite des PR publiques |
-| SPEC-SOURCES-01 | Grok | Prochaine mission après réception de QA-01 — prêt à lancer — [brief complet](missions/SPEC-SOURCES-01.md) | Sources officielles et mapping des offres réelles |
+| SPEC-SOURCES-01 | Grok puis intégrateur | Reçue, revue et amendée — [PR #5](https://github.com/Masterofhypnose/intermittenz/pull/5) ouverte ; documentation officielle partiellement vérifiée, aucun compte/API activé ; ne pas refaire | Sources et mapping conservateur, cycle de vie sans retrait déduit d’une recherche |
 
 Une mission n'est pas attribuée ou lancée automatiquement par ce tableau. Vérifier les PR ouvertes pour éviter les doublons ; ne pas prendre deux missions qui modifient les mêmes fichiers.
 
