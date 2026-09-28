@@ -1,9 +1,16 @@
-# Claude — CODE-ACTIVITY-01
+# DeepSeek — CODE-ACTIVITY-01 (relais de Claude)
 
 Mission de développement prête à lancer par le fondateur, sans nouveau brainstorming. La spécification revue est acceptée comme base de ce lot isolé par l’intégrateur ; sa PR #6 reste ouverte, aucune fusion autorisée.
 
 Référence normative : https://github.com/Masterofhypnose/intermittenz/blob/980f6c290869a066d01c4709e7534ca20acff16b/docs/proposals/activity.md
 Lire AGENTS.md et docs/TASKS.md. Le dossier docs/agent-packs/CODE-ACTIVITY-01.md fournit en un fichier cette mission, toute la spec, les contrats communs et package.json, sans accès privé requis.
+
+## Relais du 28 septembre au soir
+Claude est en pause de quota, information transmise par le fondateur. Sa spécification reste créditée à Claude ; aucun code CODE-ACTIVITY-01 n’est reçu dans les PR ouvertes vérifiées à cette date. DeepSeek devient le responsable prévu du développement de ce lot. Exécution à déclencher par le fondateur ; ce changement ne lance aucun modèle automatiquement.
+
+Ne pas reprendre QA-DISPLAY-01, déjà clôturée. Claude ne doit pas reprendre ce même code sans relire TASKS et vérifier la livraison de DeepSeek. Si un travail Claude non publié apparaît, le signaler à l’intégrateur avant de créer une seconde implémentation.
+
+Le périmètre, le contrat revu et les critères restent inchangés. L’intégrateur exécute les tests et effectue le raccordement privé après réception. Sans shell : fournir les tests sur les vrais imports et indiquer « non exécutés ». Sans écriture GitHub : joindre les fichiers ou, à défaut, un bloc de code complet par chemin (tsx/ts/css/js/markdown), avec génériques et JSX intacts. Ne pas livrer une simple description à la place d’un fichier. Terminer par un inventaire de tous les fichiers réellement fournis et des limites restantes.
 
 ## Travail
 Implémenter le module complet décrit : saisie courte, détails facultatifs, édition/suppression confirmées, liste/calendrier, adaptateur mémoire et localStorage avec Web Locks, JSON/CSV et tests sur vrais imports. Types locaux uniquement. Dates civiles, pas de conversion cachets/heures, aucun raccordement automatique aux 507h. Respecter les décisions d’import, doublons et concurrence du document revu plutôt que la première version de Claude.

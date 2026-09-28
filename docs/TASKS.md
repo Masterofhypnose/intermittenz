@@ -13,7 +13,7 @@
 
 Une mission n'est pas attribuée ou lancée automatiquement par ce tableau. Vérifier les PR ouvertes pour éviter les doublons ; ne pas prendre deux missions qui modifient les mêmes fichiers.
 
-QA-01 historique : [rapport Grok reçu et trié](reviews/QA-01.md). Revue statique de main, sans SHA exact ni exécution. Les points focus/pagination sont déjà corrigés dans MARKET-02 ; ne pas refaire. La mission active est QA-DISPLAY-01, sur ses PR épinglées.
+QA-01 historique : [rapport Grok reçu et trié](reviews/QA-01.md). Revue statique de main, sans SHA exact ni exécution. Les points focus/pagination sont déjà corrigés dans MARKET-02 ; ne pas refaire. QA-DISPLAY-01 est également clôturée côté revue statique ; ne pas la relancer.
 
 ## Sections supplémentaires prêtes à spécifier
 - SPEC-DOCS-01 → Gemini : docs/missions/SPEC-DOCS-01.md. Livrable limité à docs/proposals/documents.md. Prêt, non lancé.
@@ -27,11 +27,19 @@ Chaque agent prend uniquement sa ligne ci-dessus. QA-01 générique est remplac�
 ## Développement activité
 | ID | Responsable | Statut | Sources |
 |---|---|---|---|
-| CODE-ACTIVITY-01 | Claude | Prêt à lancer par le fondateur ; aucune exécution encore confirmée | [Mission](missions/CODE-ACTIVITY-01.md), [dossier autonome complet](agent-packs/CODE-ACTIVITY-01.md) |
+| CODE-ACTIVITY-01 | DeepSeek (relais de Claude, quota atteint) | Prêt à lancer ; aucun code reçu ni exécution confirmée. Spec Claude conservée | [Mission](missions/CODE-ACTIVITY-01.md), [dossier autonome complet](agent-packs/CODE-ACTIVITY-01.md) |
 
 ## Actualités — nouvelle mission préparée
 | ID | Responsable prévu | Statut | Livrable |
 |---|---|---|---|
 | SPEC-NEWS-01 | Grok | Prêt à lancer par le fondateur ; aucune exécution confirmée | [Brief autonome complet](missions/SPEC-NEWS-01.md) ; docs/proposals/news-sources.md |
 
-Objectif : valider un flux officiel réellement accessible pour l’onglet Actualités et son aperçu dashboard. La première version du produit utilise une sélection éditoriale explicitement datée, pas un RSS automatique. Aucun accès privé requis. Claude garde CODE-ACTIVITY-01, Gemini SPEC-DOCS-01 ; ne pas refaire les livraisons déjà intégrées.
+Objectif : valider un flux officiel réellement accessible pour l’onglet Actualités et son aperçu dashboard. La première version du produit utilise une sélection éditoriale explicitement datée, pas un RSS automatique. Aucun accès privé requis. DeepSeek reprend CODE-ACTIVITY-01 pendant la pause de Claude ; Gemini garde SPEC-DOCS-01 ; ne pas refaire les livraisons déjà intégrées.
+
+## Priorités actives — relais du 28 septembre au soir
+1. DeepSeek : CODE-ACTIVITY-01, code activité/calendrier selon la spec Claude revue. [Dossier complet](agent-packs/CODE-ACTIVITY-01.md). Aucune nouvelle revue QA-DISPLAY-01.
+2. Grok : SPEC-NEWS-01, sources RSS/API officielles pour rendre le fil Actualités automatique. [Mission complète](missions/SPEC-NEWS-01.md). Ne pas recommencer SPEC-SOURCES-01 sur les offres d’emploi.
+3. Claude : pause de quota. Ne pas lancer une implémentation activité concurrente lors de son retour ; relire ce tableau.
+4. Intégrateur : réception, correction, tests réels, raccordement et preview ; aucun accès au privé nécessaire aux contributeurs.
+
+Le fondateur déclenche ces deux missions dans les conversations des agents. Publication des briefs effectuée ; démarrage effectif et livraison encore non confirmés.
