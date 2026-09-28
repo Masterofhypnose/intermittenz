@@ -32,14 +32,14 @@ Chaque agent prend uniquement sa ligne ci-dessus. QA-01 générique est remplac�
 ## Actualités — nouvelle mission préparée
 | ID | Responsable prévu | Statut | Livrable |
 |---|---|---|---|
-| SPEC-NEWS-01 | Grok | Prêt à lancer par le fondateur ; aucune exécution confirmée | [Brief autonome complet](missions/SPEC-NEWS-01.md) ; docs/proposals/news-sources.md |
+| SPEC-NEWS-01 | Grok puis intégrateur | Reçue et amendée — [PR #8](https://github.com/Masterofhypnose/intermittenz/pull/8), flux Service Public vérifié par GET/XML ; pas de code ni déploiement. Ne pas refaire | docs/proposals/news-sources.md |
 
 Objectif : valider un flux officiel réellement accessible pour l’onglet Actualités et son aperçu dashboard. La première version du produit utilise une sélection éditoriale explicitement datée, pas un RSS automatique. Aucun accès privé requis. Claude garde CODE-ACTIVITY-01 ; DeepSeek prend SPEC-DECLARATIONS-01 ; Gemini garde SPEC-DOCS-01 ; ne pas refaire les livraisons déjà intégrées.
 
 ## Priorités actives — correction du 28 septembre, 22h48 Paris
 1. Claude : CODE-ACTIVITY-01, activité/calendrier. [Dossier complet](agent-packs/CODE-ACTIVITY-01.md). Le fondateur confirme que DeepSeek n’avait pas reçu cette mission ; aucun transfert de code à effectuer.
 2. DeepSeek : SPEC-DECLARATIONS-01 reçue via le fondateur, revue et déposée dans [PR #7](https://github.com/Masterofhypnose/intermittenz/pull/7), commit f6113ffa4cde7e97f23e8b9db42e9d2a78a42a00. Proposition non fusionnée, aucun code journal développé. Ne pas refaire la mission ni coder Activité.
-3. Grok : SPEC-NEWS-01, sources de flux d’actualités officiels. [Mission](missions/SPEC-NEWS-01.md).
+3. Grok : SPEC-NEWS-01 reçue et revue dans [PR #8](https://github.com/Masterofhypnose/intermittenz/pull/8), commit ee9c1ffcc2107f6948800bc585fc5fc9368d014e. Ne pas refaire la recherche ; le connecteur reste à développer dans un lot distinct.
 4. Gemini : SPEC-DOCS-01 inchangée, démarrage non confirmé.
 5. Intégrateur : réception, tests réels et raccordement ; garde le produit privé.
 
@@ -47,3 +47,6 @@ Missions préparées ; le fondateur les déclenche dans les conversations des ag
 
 ## Déclarations — réception du 28 septembre
 SPEC-DECLARATIONS-01 : contribution DeepSeek amendée ; choix tranchés, rapprochement avec la spec Activité et correction des fonctions déjà présentes. Types proposés contrôlés par tsc ; aucun test applicatif ou nouvelle lecture fiscale dans ce lot documentaire. Le développement du journal nécessite une mission de code séparée avec méthodes de service figées. Les agents n’ont pas à demander les sources privées pour reprendre cette proposition publique.
+
+## Actualités — réception du 28 septembre
+Grok : proposition reçue. Intégrateur : documentation Service Public relue, GET HTTP200 et XML RSS2.0/10 éléments/ttl60 vérifiés. Spécification revue : hôtes distincts récupération/liens, normalisation des identités, dates et cache non durable. Types proposés contrôlés par tsc ; aucun connecteur applicatif ou test UI de ce flux exécuté. Le produit conserve la sélection éditoriale jusqu’à intégration du futur lot code.
