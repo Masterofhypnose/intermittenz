@@ -198,3 +198,6 @@
 .textarea {font-size:16px;}
 .headerTitle {margin:0;}
 .retryBtn {min-height:44px;}
+
+/* Allow the thread and composer to shrink inside narrow flex panes. */
+.root,.textarea{min-width:0}
