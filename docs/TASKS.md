@@ -38,9 +38,12 @@ Objectif : valider un flux officiel réellement accessible pour l’onglet Actua
 
 ## Priorités actives — correction du 28 septembre, 22h48 Paris
 1. Claude : CODE-ACTIVITY-01, activité/calendrier. [Dossier complet](agent-packs/CODE-ACTIVITY-01.md). Le fondateur confirme que DeepSeek n’avait pas reçu cette mission ; aucun transfert de code à effectuer.
-2. DeepSeek : SPEC-DECLARATIONS-01, préparation dépenses/trajets/justificatifs et déclaration, avec DéclaArt et ArtDécla comme références fonctionnelles. [Brief autonome](missions/SPEC-DECLARATIONS-01.md). Ne pas refaire QA-DISPLAY-01 ni coder Activité.
+2. DeepSeek : SPEC-DECLARATIONS-01 reçue via le fondateur, revue et déposée dans [PR #7](https://github.com/Masterofhypnose/intermittenz/pull/7), commit f6113ffa4cde7e97f23e8b9db42e9d2a78a42a00. Proposition non fusionnée, aucun code journal développé. Ne pas refaire la mission ni coder Activité.
 3. Grok : SPEC-NEWS-01, sources de flux d’actualités officiels. [Mission](missions/SPEC-NEWS-01.md).
 4. Gemini : SPEC-DOCS-01 inchangée, démarrage non confirmé.
 5. Intégrateur : réception, tests réels et raccordement ; garde le produit privé.
 
 Missions préparées ; le fondateur les déclenche dans les conversations des agents. Aucun démarrage ou résultat supposé à partir de la seule publication de ce tableau.
+
+## Déclarations — réception du 28 septembre
+SPEC-DECLARATIONS-01 : contribution DeepSeek amendée ; choix tranchés, rapprochement avec la spec Activité et correction des fonctions déjà présentes. Types proposés contrôlés par tsc ; aucun test applicatif ou nouvelle lecture fiscale dans ce lot documentaire. Le développement du journal nécessite une mission de code séparée avec méthodes de service figées. Les agents n’ont pas à demander les sources privées pour reprendre cette proposition publique.
