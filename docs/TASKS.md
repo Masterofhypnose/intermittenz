@@ -9,11 +9,11 @@
 | SPEC-ACTIVITY-01 | Claude | Prêt à lancer — [brief complet](missions/SPEC-ACTIVITY-01.md) | Activité/calendrier : spécification et contrat proposés |
 | SPEC-DOCS-01 | Gemini | Prêt à lancer — [brief complet](missions/SPEC-DOCS-01.md) | Coffre local : spécification et contrat proposés |
 | QA-DISPLAY-01 | DeepSeek | Prêt à lancer — [brief complet](missions/QA-DISPLAY-01.md) | Revue visuelle ou statique explicite des PR publiques |
-| SPEC-SOURCES-01 | Grok | Prêt à lancer — [brief complet](missions/SPEC-SOURCES-01.md) | Sources officielles et mapping des offres réelles |
+| SPEC-SOURCES-01 | Grok | Prochaine mission après réception de QA-01 — prêt à lancer — [brief complet](missions/SPEC-SOURCES-01.md) | Sources officielles et mapping des offres réelles |
 
 Une mission n'est pas attribuée ou lancée automatiquement par ce tableau. Vérifier les PR ouvertes pour éviter les doublons ; ne pas prendre deux missions qui modifient les mêmes fichiers.
 
-QA-01 : lancer l'atelier, lire les contrats, tester mobile 390px/desktop 1280px, clavier, recherche sans résultat, erreurs favoris, création et retour catalogue. Rapport avec étapes reproductibles, attendu/observé, gravité et captures si possible. Pas de calcul réglementaire à auditer ici. Dire explicitement si aucun navigateur ou exécuteur n'est disponible.
+QA-01 historique : [rapport Grok reçu et trié](reviews/QA-01.md). Revue statique de main, sans SHA exact ni exécution. Les points focus/pagination sont déjà corrigés dans MARKET-02 ; ne pas refaire. La mission active est QA-DISPLAY-01, sur ses PR épinglées.
 
 ## Sections supplémentaires prêtes à spécifier
 - SPEC-DOCS-01 → Gemini : docs/missions/SPEC-DOCS-01.md. Livrable limité à docs/proposals/documents.md. Prêt, non lancé.
