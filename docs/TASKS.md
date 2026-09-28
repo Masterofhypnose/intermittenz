@@ -28,3 +28,10 @@ Chaque agent prend uniquement sa ligne ci-dessus. QA-01 générique est remplac�
 | ID | Responsable | Statut | Sources |
 |---|---|---|---|
 | CODE-ACTIVITY-01 | Claude | Prêt à lancer par le fondateur ; aucune exécution encore confirmée | [Mission](missions/CODE-ACTIVITY-01.md), [dossier autonome complet](agent-packs/CODE-ACTIVITY-01.md) |
+
+## Actualités — nouvelle mission préparée
+| ID | Responsable prévu | Statut | Livrable |
+|---|---|---|---|
+| SPEC-NEWS-01 | Grok | Prêt à lancer par le fondateur ; aucune exécution confirmée | [Brief autonome complet](missions/SPEC-NEWS-01.md) ; docs/proposals/news-sources.md |
+
+Objectif : valider un flux officiel réellement accessible pour l’onglet Actualités et son aperçu dashboard. La première version du produit utilise une sélection éditoriale explicitement datée, pas un RSS automatique. Aucun accès privé requis. Claude garde CODE-ACTIVITY-01, Gemini SPEC-DOCS-01 ; ne pas refaire les livraisons déjà intégrées.
