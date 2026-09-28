@@ -8,7 +8,7 @@
 | JOBS-01 | Grok puis intégrateur | Livré, corrigé et testé — [PR #4](https://github.com/Masterofhypnose/intermittenz/pull/4), CI publique verte au commit 0ce33c8 ; intégré sur la branche privée de preview (7eb3950), 26 tests locaux réussis ; ne pas refaire | Catalogue, dates/rémunération, fiche, favoris et 6 tests réels |
 | SPEC-ACTIVITY-01 | Claude | Prêt à lancer — [brief complet](missions/SPEC-ACTIVITY-01.md) | Activité/calendrier : spécification et contrat proposés |
 | SPEC-DOCS-01 | Gemini | Prêt à lancer — [brief complet](missions/SPEC-DOCS-01.md) | Coffre local : spécification et contrat proposés |
-| QA-DISPLAY-01 | DeepSeek | Prêt à lancer — [brief complet](missions/QA-DISPLAY-01.md) | Revue visuelle ou statique explicite des PR publiques |
+| QA-DISPLAY-01 | DeepSeek | Acceptée via le fondateur ; revue statique uniquement (sans accès GitHub/Node/navigateur). [Dossier autonome de 32 sources exactes](agent-packs/QA-DISPLAY-01.md) prêt à joindre, rapport attendu | Revue des trois PR corrigées, pas du main historique |
 | SPEC-SOURCES-01 | Grok puis intégrateur | Reçue, revue et amendée — [PR #5](https://github.com/Masterofhypnose/intermittenz/pull/5) ouverte ; documentation officielle partiellement vérifiée, aucun compte/API activé ; ne pas refaire | Sources et mapping conservateur, cycle de vie sans retrait déduit d’une recherche |
 
 Une mission n'est pas attribuée ou lancée automatiquement par ce tableau. Vérifier les PR ouvertes pour éviter les doublons ; ne pas prendre deux missions qui modifient les mêmes fichiers.

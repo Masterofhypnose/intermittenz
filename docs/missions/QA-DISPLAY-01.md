@@ -16,3 +16,6 @@ Le dashboard privé et la jauge 507h sont réservés à l’intégrateur : exclu
 ## Procédure commune
 Lire AGENTS.md, docs/CONTEXT.md et docs/TASKS.md. Cette mission est préparée, pas exécutée automatiquement. Indiquer immédiatement les capacités réelles : lecture, shell, navigateur, écriture GitHub. Aucun accès privé nécessaire. Ne pas refaire les modules livrés ni modifier contrats, shell, dépendances ou workflows. Ne contacter personne, ne créer aucun compte, ne déclencher aucun service payant.
 Livrer un seul Markdown au chemin indiqué, sur une branche contrib/<ID> et une PR si possible. Sinon un bloc Markdown complet entre triples backticks, ou un fichier joint ; aucune livraison tronquée. Préciser les sources effectivement lues, les vérifications exécutées et les inconnues. Aucun secret ni donnée personnelle. Ne pas inventer de tests, partenariats ou connexion à d’autres agents.
+
+## Dossier autonome pour agent sans accès GitHub
+Le fichier docs/agent-packs/QA-DISPLAY-01.md contient ce brief et 32 sources complètes récupérées aux commits épinglés : composants/CSS, services, types, tests et shell de chaque PR. Le fondateur peut joindre ce seul fichier. DeepSeek a déclaré aucun accès GitHub, Node ou navigateur : revue statique seulement, aucune nouvelle demande de copier-coller fichier par fichier.
