@@ -1,5 +1,5 @@
 'use client';
-import {useState,useEffect,useRef,useCallback} from 'react';
+import {useState,useEffect,useRef,useCallback,useId} from 'react';
 import type {JobOffer,JobsModuleProps,JobSearchQuery,JobKind,JobLookup,PayUnit,Remuneration} from '../../lib/jobs/types';
 import {KIND_LABEL,KIND_OPTIONS} from '../../lib/jobs/types';
 import styles from './Jobs.module.css';
@@ -34,7 +34,10 @@ function JobsSession({context,service,onContactPublisher}:JobsModuleProps){
  const [detailLoading,setDetailLoading]=useState(false);
  const [detailError,setDetailError]=useState('');
  const [advanced,setAdvanced]=useState(false);
+ const advancedId=useId(),minimumErrorId=useId();
  const [filters,setFilters]=useState({text:'',category:'',city:'',kind:'' as JobKind|'',startsOnOrAfter:'',endsOnOrBefore:'',remunerationStatus:'' as Remuneration['status']|'',minimum:'',unit:'day' as PayUnit,basis:'gross' as NonNullable<JobSearchQuery['pay']>['basis']});
+ let minimumError='';
+ if(filters.minimum.trim()){try{cents(filters.minimum);}catch(e){minimumError=message(e);}}
  const [items,setItems]=useState<JobOffer[]>([]);
  const [cursor,setCursor]=useState<string>();
  const [loading,setLoading]=useState(true);
@@ -109,15 +112,15 @@ function JobsSession({context,service,onContactPublisher}:JobsModuleProps){
     <label className={styles.field}>Métier<input aria-label="Filtrer par métier" value={filters.category} onChange={e=>setFilters({...filters,category:e.target.value})}/></label>
     <label className={styles.field}>Ville<input aria-label="Filtrer par ville" value={filters.city} onChange={e=>setFilters({...filters,city:e.target.value})}/></label>
    </div>
-   <div className={styles.row}><button type="button" aria-expanded={advanced} onClick={()=>setAdvanced(!advanced)}>{advanced?'Masquer les filtres avancés':'Filtres avancés'}</button></div>
-   {advanced&&<><div className={styles.advanced}>
+   <div className={styles.row}><button type="button" aria-expanded={advanced} aria-controls={advancedId} onClick={()=>setAdvanced(!advanced)}>{advanced?'Masquer les filtres avancés':'Filtres avancés'}</button></div>
+   <div id={advancedId} hidden={!advanced}><div className={styles.advanced}>
     <label className={styles.field}>Début à partir du<input type="date" value={filters.startsOnOrAfter} onChange={e=>setFilters({...filters,startsOnOrAfter:e.target.value})}/></label>
     <label className={styles.field}>Fin jusqu’au<input type="date" value={filters.endsOnOrBefore} onChange={e=>setFilters({...filters,endsOnOrBefore:e.target.value})}/></label>
     <label className={styles.field}>Rémunération<select value={filters.remunerationStatus} onChange={e=>setFilters({...filters,remunerationStatus:e.target.value as Remuneration['status']|''})}><option value="">Toutes</option><option value="known">Indiquée</option><option value="unknown">Non indiquée</option><option value="not_applicable">Bénévolat</option></select></label>
-    <label className={styles.field}>Minimum en euros<input inputMode="decimal" value={filters.minimum} onChange={e=>setFilters({...filters,minimum:e.target.value})}/></label>
+    <label className={styles.field}>Minimum en euros<input aria-invalid={!!minimumError} aria-describedby={minimumError?minimumErrorId:undefined} inputMode="decimal" value={filters.minimum} onChange={e=>setFilters({...filters,minimum:e.target.value})}/>{minimumError&&<span id={minimumErrorId}>{minimumError}</span>}</label>
     <label className={styles.field}>Unité<select value={filters.unit} onChange={e=>setFilters({...filters,unit:e.target.value as PayUnit})}>{Object.entries(unitLabels).map(([value,label])=><option key={value} value={value}>{label}</option>)}</select></label>
     <label className={styles.field}>Base<select value={filters.basis} onChange={e=>setFilters({...filters,basis:e.target.value as NonNullable<JobSearchQuery['pay']>['basis']})}>{Object.entries(basisLabels).filter(([key])=>key!=='unspecified').map(([value,label])=><option key={value} value={value}>{label}</option>)}</select></label>
-   </div><p className={styles.muted}>Dates : les bornes non renseignées sont exclues du filtre correspondant. Le minimum compare uniquement la même unité et la même base.</p></>}
+   </div><p className={styles.muted}>Dates : les bornes non renseignées sont exclues du filtre correspondant. Le minimum compare uniquement la même unité et la même base.</p></div>
    <div className={styles.row}><span role="status">{loading?'Chargement…':`${items.length} offre(s) affichée(s)`}</span>{favoritesReady&&<span>Favoris : {favorites.size}</span>}</div>
    {error&&<div role="alert" className={styles.alert}>{error}<button type="button" onClick={()=>void search(retryCursor,!!retryCursor)}>Réessayer la recherche</button></div>}
    {!loading&&!error&&!items.length&&<p className={styles.state}>Aucune offre ne correspond à votre recherche.</p>}

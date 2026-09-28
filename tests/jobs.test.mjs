@@ -85,7 +85,13 @@ test('jobs React: navigation retains pages/focus, errors retry, filters and lite
   await h.click(h.button('Charger plus'));assert.equal(document.querySelectorAll('article').length,6);
   const opener=document.querySelector('[aria-label^="Voir "]');const label=opener.getAttribute('aria-label');opener.focus();await h.click(opener);assert.equal(document.activeElement.tagName,'H1');assert.match(document.body.textContent,/Description/);
   await h.click(h.button('← Retour au catalogue'));assert.equal(document.querySelectorAll('article').length,6);assert.equal(document.activeElement.getAttribute('aria-label'),label);
+  const disclosure=h.button('Filtres avancés');const panel=document.getElementById(disclosure.getAttribute('aria-controls'));assert.ok(panel);assert.equal(panel.hidden,true);
   await h.click(h.button('Filtres avancés'));assert.equal(document.querySelectorAll('article').length,6);
+  assert.equal(panel.hidden,false);
+  await h.change('Minimum en euros','incorrect');
+  const invalid=document.querySelector('[aria-invalid="true"]');assert.ok(invalid);assert.match(document.getElementById(invalid.getAttribute('aria-describedby')).textContent,/Minimum invalide/);
+  await h.change('Minimum en euros','');assert.equal(document.querySelector('[aria-invalid="true"]'),null);
+
   await h.change('Rémunération','known');await h.change('Minimum en euros','280');await h.change('Unité','day');await h.change('Base','gross');assert.equal(document.querySelectorAll('article').length,1);assert.match(document.querySelector('article').textContent,/Régisseur/);
   await h.change('Minimum en euros','');await h.change('Rémunération','');
   await h.change('Recherche d’offres','no-results');assert.match(document.body.textContent,/Aucune offre/);

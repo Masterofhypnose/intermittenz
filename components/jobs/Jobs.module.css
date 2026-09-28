@@ -22,3 +22,5 @@
 .badge {display:inline-block;padding:2px 8px;border-radius:999px;background:#1a2744;color:var(--muted);font-size:12px;margin-right:6px}
 .description {white-space:pre-wrap;overflow-wrap:anywhere}
 @media(max-width:650px){.grid,.toolbar,.advanced{grid-template-columns:minmax(0,1fr)}.root h1{font-size:24px}}
+
+.root h1,.root h2,.root h3{overflow-wrap:anywhere}
