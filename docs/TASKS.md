@@ -38,7 +38,7 @@ Objectif : valider un flux officiel réellement accessible pour l’onglet Actua
 
 ## Priorités actives — mise à jour après retour des agents
 1. Claude : CODE-ACTIVITY-01 en pause quota ; conserver son travail et récupérer l’avancement avant tout relais.
-2. DeepSeek : **CODE-EXPENSES-01**, prêt à lancer avec le [dossier autonome](agent-packs/CODE-EXPENSES-01.md). Sa SPEC-DECLARATIONS-01 est reçue en PR #7, ne pas refaire.
+2. DeepSeek : **CODE-EXPENSES-01**, reçu, corrigé et testé — [PR #9](https://github.com/Masterofhypnose/intermittenz/pull/9) ouverte, commit b390e3bd57c7672aa98168a8eb0f05a29928c52d. 22 tests du noyau et 19 tests existants locaux réussis ; lint/typecheck/build réussis. CI GitHub en cours au dépôt. Aucun écran ou stockage raccordé au privé ; ne pas refaire. Sa SPEC-DECLARATIONS-01 est reçue en PR #7, ne pas refaire.
 3. Grok : **CODE-NEWS-CORE-01**, prêt à lancer avec le [dossier autonome](agent-packs/CODE-NEWS-CORE-01.md). SPEC-NEWS-01 reçue en PR #8, ne pas refaire. Transport XML/cache/raccordement restent distincts.
 4. Gemini : **SPEC-DOCS-01**, accès dépôt indisponible ; [dossier autonome à joindre](agent-packs/SPEC-DOCS-01.md), sans navigation GitHub obligatoire.
 5. Intégrateur : réception, tests et raccordement privé. Le produit conserve actuellement ses actualités éditoriales.
@@ -50,3 +50,6 @@ SPEC-DECLARATIONS-01 : contribution DeepSeek amendée ; choix tranchés, rapproc
 
 ## Actualités — réception du 28 septembre
 Grok : proposition reçue. Intégrateur : documentation Service Public relue, GET HTTP200 et XML RSS2.0/10 éléments/ttl60 vérifiés. Spécification revue : hôtes distincts récupération/liens, normalisation des identités, dates et cache non durable. Types proposés contrôlés par tsc ; aucun connecteur applicatif ou test UI de ce flux exécuté. Le produit conserve la sélection éditoriale jusqu’à intégration du futur lot code.
+
+## Réception CODE-EXPENSES-01 — 29 septembre
+Contribution DeepSeek intégrée après correction des parsers, horodatages, références et tests. Note dans docs/deliveries/CODE-EXPENSES-01.md sur la branche de PR #9. DeepSeek n’a pas exécuté de commande ; les résultats locaux ci-dessus sont ceux de l’intégrateur. Pas de nouvelle mission CRUD attribuée par cette réception.
