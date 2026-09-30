@@ -36,6 +36,14 @@ Chaque agent prend uniquement sa ligne ci-dessus. QA-01 générique est remplac�
 
 Objectif : valider un flux officiel réellement accessible pour l’onglet Actualités et son aperçu dashboard. La première version du produit utilise une sélection éditoriale explicitement datée, pas un RSS automatique. Aucun accès privé requis. Claude garde CODE-ACTIVITY-01 ; DeepSeek a livré SPEC-DECLARATIONS-01 ; Gemini garde SPEC-DOCS-01 ; ne pas refaire les livraisons déjà intégrées.
 
+## Nouvelles missions actives — 30 septembre 2026
+| ID | Responsable | Statut | Mission |
+|---|---|---|---|
+| CALENDAR-01 | DeepSeek | **À prendre maintenant** | [docs/missions/CALENDAR-01.md](missions/CALENDAR-01.md) |
+| DOCS-REVIEW-02 | Grok | **À prendre maintenant** | [docs/missions/DOCS-REVIEW-02.md](missions/DOCS-REVIEW-02.md) |
+
+Claude est en pause quota : aucune nouvelle mission ne lui est attribuée. DeepSeek et Grok doivent traiter uniquement leur ligne ci-dessus sur une branche/PR publique distincte.
+
 ## Priorités actives — mise à jour après retour des agents
 1. Claude : CODE-ACTIVITY-01 en pause quota ; conserver son travail et récupérer l’avancement avant tout relais.
 2. DeepSeek : **CODE-EXPENSES-01**, reçu, corrigé et testé — [PR #9](https://github.com/Masterofhypnose/intermittenz/pull/9) ouverte, commit b390e3bd57c7672aa98168a8eb0f05a29928c52d. 22 tests du noyau et 19 tests existants locaux réussis ; lint/typecheck/build réussis. CI GitHub verte (push et PR vérifiés le 29 septembre). Aucun écran ou stockage raccordé au privé ; ne pas refaire. Sa SPEC-DECLARATIONS-01 est reçue en PR #7, ne pas refaire.
