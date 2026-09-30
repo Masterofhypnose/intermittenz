@@ -7,7 +7,7 @@
 | MARKET-02 | DeepSeek puis intégrateur | CI atelier verte ; report identique dans la branche privée de preview, 13 tests privés réussis — [PR #2](https://github.com/Masterofhypnose/intermittenz/pull/2) publique ouverte, ne pas refaire | Focus au retour catalogue, pagination conservée et favoris isolés par service |
 | JOBS-01 | Grok puis intégrateur | Livré, corrigé et testé — [PR #4](https://github.com/Masterofhypnose/intermittenz/pull/4), CI publique verte au commit 0ce33c8 ; intégré sur la branche privée de preview (7eb3950), 26 tests locaux réussis ; ne pas refaire | Catalogue, dates/rémunération, fiche, favoris et 6 tests réels |
 | SPEC-ACTIVITY-01 | Claude puis intégrateur | Reçue et amendée — [PR #6](https://github.com/Masterofhypnose/intermittenz/pull/6), base normative pour CODE-ACTIVITY-01 ; ne pas refaire | Contrat activité/calendrier et persistance locale |
-| SPEC-DOCS-01 | Gemini | Accès GitHub indisponible ; dossier autonome préparé — [pack](agent-packs/SPEC-DOCS-01.md) | Coffre local : spécification et contrat proposés |
+| SPEC-DOCS-01 | Gemini puis intégrateur | Reçue, revue et publiée — [PR #11](https://github.com/Masterofhypnose/intermittenz/pull/11) ouverte ; aucun code de coffre livré, ne pas refaire la spécification | Coffre local : spécification et contrat proposés |
 | QA-DISPLAY-01 | DeepSeek puis intégrateur | Rapport reçu et [trié](reviews/QA-DISPLAY-01.md), correctifs appliqués aux PR #2/#3/#4 et preview privée ; 26 tests privés et 19 tests atelier locaux réussis. Visuel/lecteur d’écran non exécutés ; ne pas refaire cette revue statique | Titres longs, largeur Chat, filtres Jobs accessibles |
 | SPEC-SOURCES-01 | Grok puis intégrateur | Reçue, revue et amendée — [PR #5](https://github.com/Masterofhypnose/intermittenz/pull/5) ouverte ; documentation officielle partiellement vérifiée, aucun compte/API activé ; ne pas refaire | Sources et mapping conservateur, cycle de vie sans retrait déduit d’une recherche |
 
@@ -16,7 +16,7 @@ Une mission n'est pas attribuée ou lancée automatiquement par ce tableau. Vér
 QA-01 historique : [rapport Grok reçu et trié](reviews/QA-01.md). Revue statique de main, sans SHA exact ni exécution. Les points focus/pagination sont déjà corrigés dans MARKET-02 ; ne pas refaire. QA-DISPLAY-01 est également clôturée côté revue statique ; ne pas la relancer.
 
 ## Sections supplémentaires prêtes à spécifier
-- SPEC-DOCS-01 → Gemini : docs/missions/SPEC-DOCS-01.md. Livrable limité à docs/proposals/documents.md. Dossier autonome préparé ; démarrage non confirmé.
+- SPEC-DOCS-01 → Gemini : docs/missions/SPEC-DOCS-01.md. Livrable docs/proposals/documents.md reçu et amendé ; PR #11 ouverte le 30 septembre, non fusionnée.
 - SPEC-JOBS-01 → Grok : docs/missions/SPEC-JOBS-01.md. Livrable reçu via le fondateur, revu et déposé dans [PR #1](https://github.com/Masterofhypnose/intermittenz/pull/1). Revue Grok reçue : aucun blocage restant au commit 763792b. PR non fusionnée ; base validée pour le module isolé JOBS-01. Ne pas refaire la mission.
 
 La couverture des autres sections et leurs dépendances se trouve dans [ROADMAP.md](ROADMAP.md). Les spécifications évitent que chaque contributeur crée sa propre auth, base ou architecture.
@@ -39,11 +39,11 @@ Objectif : valider un flux officiel réellement accessible pour l’onglet Actua
 ## Priorités actives — mise à jour après retour des agents
 1. Claude : CODE-ACTIVITY-01 en pause quota ; conserver son travail et récupérer l’avancement avant tout relais.
 2. DeepSeek : **CODE-EXPENSES-01**, reçu, corrigé et testé — [PR #9](https://github.com/Masterofhypnose/intermittenz/pull/9) ouverte, commit b390e3bd57c7672aa98168a8eb0f05a29928c52d. 22 tests du noyau et 19 tests existants locaux réussis ; lint/typecheck/build réussis. CI GitHub verte (push et PR vérifiés le 29 septembre). Aucun écran ou stockage raccordé au privé ; ne pas refaire. Sa SPEC-DECLARATIONS-01 est reçue en PR #7, ne pas refaire.
-3. Grok : **CODE-NEWS-CORE-01**, reçu, corrigé et testé — [PR #10](https://github.com/Masterofhypnose/intermittenz/pull/10) ouverte, commit d8f261abd5a5c7268dab4dc31c1181e3f9fab3b6. 15 tests du noyau réussis, 56 tests dans l’atelier combiné ; lint/typecheck/build réussis. CI en cours au dépôt ; ne pas refaire. SPEC-NEWS-01 reçue en PR #8, ne pas refaire. Transport XML/cache/raccordement restent distincts.
-4. Gemini : **SPEC-DOCS-01**, accès dépôt indisponible ; [dossier autonome à joindre](agent-packs/SPEC-DOCS-01.md), sans navigation GitHub obligatoire.
+3. Grok : **CODE-NEWS-CORE-01**, reçu, corrigé et testé — [PR #10](https://github.com/Masterofhypnose/intermittenz/pull/10) ouverte, commit d8f261abd5a5c7268dab4dc31c1181e3f9fab3b6. 15 tests du noyau réussis, 56 tests dans l’atelier combiné ; lint/typecheck/build réussis. CI PR confirmée verte le 30 septembre (run 36546110853) ; ne pas refaire. SPEC-NEWS-01 reçue en PR #8, ne pas refaire. Transport XML/cache/raccordement restent distincts.
+4. Gemini : **SPEC-DOCS-01**, réception finalisée par l’intégrateur — [PR #11](https://github.com/Masterofhypnose/intermittenz/pull/11), commit 6b780032c849028890fcc2f26992f127827aaec0. Proposition uniquement, aucun coffre codé ; ne pas refaire.
 5. Intégrateur : réception, tests et raccordement privé. Le produit conserve actuellement ses actualités éditoriales.
 
-Chaque dossier contient les consignes, le statut et les sources nécessaires. Ne pas demander au fondateur de recopier TASKS à nouveau. Missions préparées, exécution non confirmée ; le fondateur transmet les dossiers dans chaque conversation. Aucune fusion ni activation de flux n’est réalisée par cette mise à jour.
+Chaque dossier contient les consignes, le statut et les sources nécessaires. Ne pas demander au fondateur de recopier TASKS à nouveau. Les statuts de réception ci-dessus font foi ; le fondateur transmet les nouveaux dossiers dans chaque conversation. Aucune fusion ni activation de flux n’est réalisée par cette mise à jour.
 
 ## Déclarations — réception du 28 septembre
 SPEC-DECLARATIONS-01 : contribution DeepSeek amendée ; choix tranchés, rapprochement avec la spec Activité et correction des fonctions déjà présentes. Types proposés contrôlés par tsc ; aucun test applicatif ou nouvelle lecture fiscale dans ce lot documentaire. Le développement du journal nécessite une mission de code séparée avec méthodes de service figées. Les agents n’ont pas à demander les sources privées pour reprendre cette proposition publique.
@@ -56,3 +56,6 @@ Contribution DeepSeek intégrée après correction des parsers, horodatages, ré
 
 ## Réception CODE-NEWS-CORE-01 — 29 septembre
 Cinq fichiers reçus de Grok, corrigés et déposés en PR #10. Aucun appel HTTP, parsing XML, cache ou UI raccordés. Le produit conserve sa sélection éditoriale. Grok n’a exécuté aucune commande ; tests et build ci-dessus exécutés par l’intégrateur. Aucune nouvelle mission attribuée automatiquement.
+
+## Réception SPEC-DOCS-01 — 30 septembre
+Fichier amendé retrouvé intégralement, relu et publié seul sur contrib/SPEC-DOCS-01 en PR #11, non fusionnée. Lot A IndexedDB/PDF/JPEG/PNG, métadonnées, recherche, export et suppression ; ZIP en lot B. Aucun moteur réglementaire Gemini intégré. Contrat proposé contrôlé par tsc strict. Vérifications de l’atelier local combiné : lint, typecheck, 56 tests et build réussis ; ces tests couvrent les modules existants, pas un coffre applicatif. Aucun parcours Android ni stockage réel testé. Le suivi TASKS est actualisé séparément de la proposition. Claude conserve CODE-ACTIVITY-01 en pause, avancement à récupérer.
