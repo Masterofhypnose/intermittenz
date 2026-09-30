@@ -1,0 +1,26 @@
+.root {--bg:#0b1220;--panel:#111a2e;--line:#2a3a5e;--text:#e8eefc;--muted:#a4b2cd;--accent:#87a2ff;color:var(--text);font-size:15px;line-height:1.5;min-width:0}
+.root * {box-sizing:border-box}
+.root header {display:block;margin-bottom:20px}
+.root h1 {font-size:28px;margin:0 0 8px}
+.root h2 {font-size:21px}.root h3 {font-size:17px;margin:0 0 8px}.root p {overflow-wrap:anywhere}.muted {color:var(--muted)}
+.toolbar,.advanced {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:16px}
+.advanced {padding:14px;border:1px dashed var(--line);border-radius:12px;margin-bottom:20px}
+.field {display:flex;flex-direction:column;gap:7px;min-width:0}
+.field input,.field select {width:100%;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:12px;font:inherit;font-size:16px}
+.root button,.root a {min-height:44px;padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--text);cursor:pointer;font:inherit}
+.root a {display:inline-flex;align-items:center}
+.root button:disabled {opacity:.55;cursor:not-allowed}
+.root :is(button,input,select,a):focus-visible {outline:2px solid var(--accent);outline-offset:3px}
+.root .primary {background:linear-gradient(135deg,#436fe5,#7750c3);font-weight:700}
+.row {display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:16px 0}.row span {flex:1}
+.grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;list-style:none;padding:0;margin:0}
+.card,.section {background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:16px}
+.meta {color:var(--muted);font-size:13px}.pay {font-size:18px;font-weight:700}
+.alert {color:#ffd7d7;background:#391b2c;border:1px solid #984d66;padding:12px;border-radius:10px;margin:12px 0}
+.state {padding:24px;background:var(--bg);border:1px dashed var(--line);border-radius:14px}
+.fav[aria-pressed='true'] {color:#ff8faf}.root h1:focus {outline:none}
+.badge {display:inline-block;padding:2px 8px;border-radius:999px;background:#1a2744;color:var(--muted);font-size:12px;margin-right:6px}
+.description {white-space:pre-wrap;overflow-wrap:anywhere}
+@media(max-width:650px){.grid,.toolbar,.advanced{grid-template-columns:minmax(0,1fr)}.root h1{font-size:24px}}
+
+.root h1,.root h2,.root h3{overflow-wrap:anywhere}
