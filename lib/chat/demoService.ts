@@ -1,3 +1,3 @@
-import type {ChatService} from '../contracts/modules';
-/** Integration slot. Implement conversations, messages, failures and idempotency in CHAT-01. */
-export function createDemoChatService():ChatService{return {async listConversations(){return {items:[]};},async listMessages(){return {items:[]};},async sendMessage(){throw new Error('Adaptateur chat à implémenter — aucun message envoyé.');}};}
+import type {PublicProfile} from '../contracts/modules';
+import {createDemoAdapter} from './demoAdapter';
+export function createDemoChatService({viewer={id:'demo-viewer',displayName:'Camille Démo'},pageSize=2}:{viewer?:PublicProfile;pageSize?:number}={}){return createDemoAdapter(viewer.id,viewer.displayName,pageSize);}

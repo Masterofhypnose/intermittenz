@@ -1,0 +1,79 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  background: #0d1117;
+  color: #e8edf5;
+  font-family: inherit;
+  border-radius: 0.85rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.demoBanner {
+  flex-shrink: 0;
+  background: rgba(245, 158, 11, 0.08);
+  border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+  color: #f59e0b;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.45rem 1rem;
+  text-align: center;
+  letter-spacing: 0.01em;
+}
+
+.layout {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.listPane {
+  width: 100%;
+  border-right: 1px solid rgba(255, 255, 255, 0.07);
+  overflow-y: auto;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.threadPane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.noSelection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 0.85rem;
+  color: #4b5a7a;
+  font-size: 0.88rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+.noSelectionIcon { font-size: 2.5rem; opacity: 0.35; }
+
+/* ── Desktop: side by side ────────────────────────────────── */
+@media (min-width: 768px) {
+  .listPane { width: 300px; }
+  .mobileHidden { display: flex !important; flex-direction: column; }
+}
+
+/* ── Mobile: one pane at a time ───────────────────────────── */
+@media (max-width: 767px) {
+  .mobileHidden { display: none !important; }
+  .listPane { border-right: none; }
+}
+
+.root {height: min(680px, 78dvh); min-height: 360px;}
+.visitedThread {height:100%; min-height:0;}
+.visitedThread[hidden] {display:none;}
